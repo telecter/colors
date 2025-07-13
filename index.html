@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎨</text></svg>" />
+  <title>Find-a-Color</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: ui-monospace,
+        Menlo, Monaco,
+        "Cascadia Mono", "Segoe UI Mono",
+        "Roboto Mono",
+        "Oxygen Mono",
+        "Ubuntu Mono",
+        "Source Code Pro",
+        "Fira Mono",
+        "Droid Sans Mono",
+        "Consolas", "Courier New", monospace;
+    }
+
+    .box {
+      background-color: beige;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      width: 10%;
+      margin: auto;
+      display: inline-block;
+    }
+
+    #color-red {
+      color: red;
+    }
+
+    #color-green {
+      color: green;
+    }
+
+    #color-blue {
+      color: blue;
+    }
+  </style>
+  <script src="./main.js" defer></script>
+</head>
+
+<body>
+  <div class="box"><span id="color-red" contenteditable="plaintext-only"></span>, <span id="color-green"
+      contenteditable="plaintext-only"></span>, <span id="color-blue" contenteditable="plaintext-only"></span></div>
+  <div class="box" id="color-hex" contenteditable="plaintext-only" spellcheck="false"></div>
+  <div style="height: 100%;"></div>
+</body>
+
+</html>
