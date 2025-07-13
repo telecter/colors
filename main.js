@@ -23,48 +23,11 @@ function generate() {
   const b = Math.floor(Math.random() * 255);
   document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
 
-  lR.innerText = r;
-  lG.innerText = g;
-  lB.innerText = b;
+  lR.textContent = r;
+  lG.textContent = g;
+  lB.textContent = b;
 
-  lH.innerText = rgbToHex(r, g, b);
-}
-
-function setFromRGB() {
-  let invalid = false;
-  [lR.innerText, lG.innerText, lB.innerText].forEach((value) => {
-    if (value.length < 1) {
-      invalid = true;
-      return;
-    }
-    let int = Number(value);
-    if (Number.isNaN(int) || int > 255) invalid = true;
-  });
-
-  if (invalid) console.log("setFromRGB denying this value!");
-  if (invalid) return;
-
-  document.body.style.backgroundColor = `rgb(${lR.innerText}, ${lG.innerText}, ${lB.innerText})`;
-  lH.innerText = rgbToHex(lR.innerText, lG.innerText, lB.innerText);
-}
-
-function setFromHex() {
-  if (lH.innerText.length < 7) return;
-
-  let int = Number(lH.innerText.replaceAll("#", "0x"));
-
-  if (Number.isNaN(int) || int > 0xffffff) {
-    console.log("setFromHex denying this value!");
-    return;
-  }
-
-  document.body.style.backgroundColor = lH.innerText;
-
-  let rgb = hexToRgb(lH.innerText);
-
-  lR.innerText = rgb[0];
-  lG.innerText = rgb[1];
-  lB.innerText = rgb[2];
+  lH.textContent = rgbToHex(r, g, b);
 }
 
 for (const elem of document.getElementsByClassName("box")) {
@@ -74,10 +37,53 @@ for (const elem of document.getElementsByClassName("box")) {
 }
 
 [lR, lG, lB].forEach((elem) => {
-  elem.oninput = setFromRGB;
+  elem.oninput = () => {
+    if (elem.textContent === "") return;
+
+    const num = parseInt(elem.textContent, 10);
+
+    if (num > 255) {
+      elem.textContent = "255";
+    }
+
+    document.body.style.backgroundColor = `rgb(${lR.textContent}, ${lG.textContent}, ${lB.textContent})`;
+    lH.textContent = rgbToHex(lR.textContent, lG.textContent, lB.textContent);
+  };
+  elem.onbeforeinput = (e) => {
+    if (e.inputType === "insertText" && !/\d/.test(e.data)) e.preventDefault();
+  };
 });
 
-lH.oninput = setFromHex;
+lH.oninput = () => {
+  if (lH.textContent[0] != "#") {
+    lH.textContent = "#" + lH.textContent;
+  }
+
+  if (lH.textContent.length < 7) return;
+
+  let int = Number(lH.textContent.replaceAll("#", "0x"));
+
+  if (Number.isNaN(int) || int > 0xffffff || int < 0) {
+    lH.textContent = "#ffffff";
+  }
+
+  document.body.style.backgroundColor = lH.textContent;
+
+  let rgb = hexToRgb(lH.textContent);
+
+  lR.textContent = rgb[0];
+  lG.textContent = rgb[1];
+  lB.textContent = rgb[2];
+};
+
+lH.onbeforeinput = (e) => {
+  if (
+    e.inputType === "insertText" &&
+    Number.isNaN(parseInt(e.data, 16)) &&
+    e.data != "#"
+  )
+    e.preventDefault();
+};
 
 document.onkeydown = (e) => {
   if (e.key === " ") generate();
