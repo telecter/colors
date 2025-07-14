@@ -3,12 +3,18 @@ const lG = document.getElementById("color-green");
 const lB = document.getElementById("color-blue");
 const lH = document.getElementById("color-hex");
 
-const rgbToHex = (r, g, b) => {
-  return "#" + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
-};
+let playBtnClicks = 0;
+let playListener;
+const playBtn = document.getElementById("play-btn");
 
-const hexToRgb = (hex) =>
-  hex
+
+
+function rgbToHex(r, g, b) {
+  return "#" + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
+}
+
+function hexToRgb(hex) {
+  return hex
     .replace(
       /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
       (m, r, g, b) => "#" + r + r + g + g + b + b
@@ -16,6 +22,7 @@ const hexToRgb = (hex) =>
     .substring(1)
     .match(/.{2}/g)
     .map((x) => parseInt(x, 16));
+}
 
 function generate() {
   const r = Math.floor(Math.random() * 255);
@@ -57,6 +64,13 @@ for (const elem of document.getElementsByClassName("box")) {
       e.preventDefault();
     }
   });
+  elem.addEventListener("click", () => {
+    window.getSelection().selectAllChildren(elem);
+  });
+});
+
+lH.addEventListener("click", () => {
+  window.getSelection().selectAllChildren(lH);
 });
 
 lH.addEventListener("input", () => {
@@ -95,5 +109,20 @@ document.addEventListener("keydown", (e) => {
   if (e.key === " ") generate();
 });
 document.addEventListener("click", generate);
+
+playBtn.addEventListener("click", () => {
+  if (playBtnClicks < 1) {
+    playListener = setInterval(() => {
+      generate();
+    }, 2000);
+    playBtn.textContent = "⏸";
+    playBtnClicks++;
+  } else {
+    clearInterval(playListener);
+    playBtn.textContent = "⏵";
+    playBtnClicks = 0;
+  }
+})
+
 
 generate();
