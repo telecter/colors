@@ -31,13 +31,13 @@ function generate() {
 }
 
 for (const elem of document.getElementsByClassName("box")) {
-  elem.onclick = (e) => {
+  elem.addEventListener("click", (e) => {
     e.stopPropagation();
-  };
+  });
 }
 
 [lR, lG, lB].forEach((elem) => {
-  elem.oninput = () => {
+  elem.addEventListener("input", () => {
     if (elem.textContent === "") return;
 
     const num = parseInt(elem.textContent, 10);
@@ -48,13 +48,18 @@ for (const elem of document.getElementsByClassName("box")) {
 
     document.body.style.backgroundColor = `rgb(${lR.textContent}, ${lG.textContent}, ${lB.textContent})`;
     lH.textContent = rgbToHex(lR.textContent, lG.textContent, lB.textContent);
-  };
-  elem.onbeforeinput = (e) => {
-    if (e.inputType === "insertText" && !/\d/.test(e.data)) e.preventDefault();
-  };
+  });
+  elem.addEventListener("beforeinput", (e) => {
+    if (
+      (e.inputType === "insertText" && !/\d/.test(e.data)) ||
+      e.inputType === "insertLineBreak"
+    ) {
+      e.preventDefault();
+    }
+  });
 });
 
-lH.oninput = () => {
+lH.addEventListener("input", () => {
   if (lH.textContent[0] != "#") {
     lH.textContent = "#" + lH.textContent;
   }
@@ -74,20 +79,21 @@ lH.oninput = () => {
   lR.textContent = rgb[0];
   lG.textContent = rgb[1];
   lB.textContent = rgb[2];
-};
+});
 
-lH.onbeforeinput = (e) => {
+lH.addEventListener("beforeinput", (e) => {
   if (
-    e.inputType === "insertText" &&
-    Number.isNaN(parseInt(e.data, 16)) &&
-    e.data != "#"
+    (e.inputType === "insertText" &&
+      Number.isNaN(parseInt(e.data, 16)) &&
+      e.data != "#") ||
+    e.inputType === "insertLineBreak"
   )
     e.preventDefault();
-};
+});
 
-document.onkeydown = (e) => {
+document.addEventListener("keydown", (e) => {
   if (e.key === " ") generate();
-};
-document.onclick = generate;
+});
+document.addEventListener("click", generate);
 
 generate();
