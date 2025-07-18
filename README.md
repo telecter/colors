@@ -1,4 +1,4 @@
-# Find-a-Color
+# 16,777,216
 A tool for finding colors you like.
 
 <img src="screenshot.png">
