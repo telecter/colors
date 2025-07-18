@@ -7,8 +7,6 @@ let playBtnClicks = 0;
 let playListener;
 const playBtn = document.getElementById("play-btn");
 
-
-
 function rgbToHex(r, g, b) {
   return "#" + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
 }
@@ -112,17 +110,14 @@ document.addEventListener("click", generate);
 
 playBtn.addEventListener("click", () => {
   if (playBtnClicks < 1) {
-    playListener = setInterval(() => {
-      generate();
-    }, 2000);
-    playBtn.textContent = "⏸";
+    playListener = setInterval(generate, 2000);
+    playBtn.children[0].className = "fa fa-pause";
     playBtnClicks++;
   } else {
     clearInterval(playListener);
-    playBtn.textContent = "⏵";
+    playBtn.children[0].className = "fa fa-play";
     playBtnClicks = 0;
   }
-})
-
+});
 
 generate();
