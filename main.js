@@ -1,10 +1,13 @@
+"use strict";
+
 const lR = document.getElementById("color-red");
 const lG = document.getElementById("color-green");
 const lB = document.getElementById("color-blue");
 const lH = document.getElementById("color-hex");
 
 let playBtnClicks = 0;
-let playListener;
+let playInterval;
+let switchTime = 2000;
 const playBtn = document.getElementById("play-btn");
 
 function rgbToHex(r, g, b) {
@@ -110,11 +113,11 @@ document.addEventListener("click", generate);
 
 playBtn.addEventListener("click", () => {
   if (playBtnClicks < 1) {
-    playListener = setInterval(generate, 2000);
+    playInterval = setInterval(generate, switchTime);
     playBtn.children[0].className = "fa fa-pause";
     playBtnClicks++;
   } else {
-    clearInterval(playListener);
+    clearInterval(playInterval);
     playBtn.children[0].className = "fa fa-play";
     playBtnClicks = 0;
   }
