@@ -1,6 +1,6 @@
-# 16,777,216
+# 🎨 colors
 
-Explore the millions of random colors. The name represents the amount that are able to be displayed (2^24).
+Explore the millions of random colors.
 
 You could use this for ideas on a color palette, for example.
 
