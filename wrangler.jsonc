@@ -3,7 +3,7 @@
   "compatibility_date": "2025-08-09",
   "assets": {
     "directory": "./src",
-    "not_found_handling": "404-page",
+    "not_found_handling": "none",
     "html_handling": "auto-trailing-slash"
   },
   "routes": [
