@@ -1,0 +1,19 @@
+{
+  "name": "colors",
+  "compatibility_date": "2025-08-19",
+  "assets": {
+    "directory": "./src",
+    "not_found_handling": "single-page-application",
+    "html_handling": "auto-trailing-slash"
+  },
+  "routes": [
+    {
+      "pattern": "telecter.xyz/colors",
+      "zone_name": "telecter.xyz"
+    },
+    {
+      "pattern": "telecter.xyz/colors/",
+      "zone_name": "telecter.xyz"
+    }
+  ]
+}
