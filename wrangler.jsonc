@@ -2,7 +2,7 @@
   "name": "colors",
   "compatibility_date": "2025-08-09",
   "assets": {
-    "directory": "./src",
+    "directory": "./public",
     "not_found_handling": "none",
     "html_handling": "auto-trailing-slash"
   },
